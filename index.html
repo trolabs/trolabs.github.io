@@ -247,14 +247,18 @@ details p{color:var(--sub);padding-bottom:18px;max-width:70ch}
   .page{inset:60px 0 0 0;padding:10px 18px 30px}
   .bgs::after{background:linear-gradient(0deg,rgba(7,10,22,.97) 30%,rgba(7,10,22,.55) 100%)}
   .ranks{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .don,.g2{grid-template-columns:1fr}
+  .don,.g2{grid-template-columns:minmax(0,1fr)}
   .stats{gap:22px}
-  .mapv{grid-template-columns:1fr!important;gap:0}
+  .mapv{grid-template-columns:minmax(0,1fr)!important;gap:0}
   .mapbig{display:none}
   .pick{width:calc(50% - 6px)}
 }
 @media (max-width:760px){.contact{grid-template-columns:1fr}.items{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item .art{height:78px}.item .art svg{width:36px;height:36px}.item .bd{padding:12px}.item h3{font-size:1.1rem}.item p{font-size:.8rem}}
-@media (max-width:460px){.tiles,.acts,.steps,.g4{grid-template-columns:1fr}.home h1{font-size:3.3rem}}
+@media (max-width:460px){.tiles,.acts,.steps,.g4{grid-template-columns:minmax(0,1fr)}.home h1{font-size:3.3rem}}
+/* HP kecil (<=400px) */
+@media (max-width:400px){.page{padding:10px 14px 30px}.don .card{padding:20px 16px}.don h3{font-size:1.65rem}.pk{gap:6px}.pk button{font-size:1.1rem;padding:10px 4px}.home h1{font-size:2.7rem}.h.title{font-size:2.6rem}.items{gap:8px}.dline{grid-template-columns:54px minmax(0,1fr) auto;gap:6px}}
+/* tombol donasi Bagi-Bagi di HP: di atas menu bawah, nggak nutup isi */
+@media (max-width:760px){.bgbg-button{bottom:calc(76px + env(safe-area-inset-bottom))!important;right:12px!important;width:50px!important;height:50px!important}.bgbg-tooltip{display:none!important}}
 </style>
 </head>
 <body>
@@ -669,7 +673,7 @@ addEventListener('hashchange',go);go();
 <script>
 // Widget Bagi-Bagi TRO — BY TRO TEAM AZAZEL. Tombol emas = form Bagi-Bagi langsung, plus 1 catatan kecil (username).
 (function(){
-var OFF=innerWidth<=760?88:24,lewat=false,isi=null;
+var OFF=innerWidth<=760?16:24,lewat=false,isi=null;
 var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
 var s=document.createElement('script');s.src='https://bagibagi.co/widget.js';
 var d={username:'TRO_LABS',mode:'floating',position:'right',color:'#d8b25c',theme:'dark',tooltip:'Donasi ke map TRO',offset:OFF};
