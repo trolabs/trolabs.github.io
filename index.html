@@ -212,10 +212,20 @@ summary::after{content:"+";position:absolute;right:4px;top:13px;font-size:1.5rem
 details[open] summary::after{transform:rotate(45deg)}
 details p{color:var(--sub);padding-bottom:18px;max-width:70ch}
 
+.contact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:1240px}
+.ccard{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:center;padding:18px 20px;transition:border-color .2s,transform .2s}
+.ccard:hover{border-color:#5865f2aa;transform:translateY(-2px)}
+.cic{grid-row:span 2;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(216,178,92,.14)}
+.cic svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ctx b{display:block;font-family:"Saira Condensed";font-weight:800;font-size:1.3rem;text-transform:uppercase;line-height:1.05}
+.ctx small{color:var(--sub);font-size:.85rem;line-height:1.35;display:block;margin-top:3px}
+.cgo{display:inline-flex;align-items:center;gap:8px;justify-self:start;padding:7px 12px;border-radius:8px;background:#5865f2;color:#fff;font-weight:700;font-size:.8rem;letter-spacing:.03em;text-transform:uppercase}
+.cgo svg{width:16px;height:16px}
 .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);opacity:0;z-index:50;background:var(--gold);color:#1a1405;font-weight:700;padding:10px 18px;border-radius:10px;transition:.25s;pointer-events:none}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media (max-width:1100px){
+  .contact{grid-template-columns:1fr}
   .tiles,.acts,.steps,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .ranks{grid-template-columns:repeat(3,minmax(0,1fr))}
   .shopwrap,.rbxwrap{grid-template-columns:minmax(0,1fr)}
@@ -242,7 +252,7 @@ details p{color:var(--sub);padding-bottom:18px;max-width:70ch}
   .mapbig{display:none}
   .pick{width:calc(50% - 6px)}
 }
-@media (max-width:760px){.items{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item .art{height:78px}.item .art svg{width:36px;height:36px}.item .bd{padding:12px}.item h3{font-size:1.1rem}.item p{font-size:.8rem}}
+@media (max-width:760px){.contact{grid-template-columns:1fr}.items{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item .art{height:78px}.item .art svg{width:36px;height:36px}.item .bd{padding:12px}.item h3{font-size:1.1rem}.item p{font-size:.8rem}}
 @media (max-width:460px){.tiles,.acts,.steps,.g4{grid-template-columns:1fr}.home h1{font-size:3.3rem}}
 </style>
 </head>
@@ -320,6 +330,23 @@ details p{color:var(--sub);padding-bottom:18px;max-width:70ch}
       <a class="tile glass" href="#shop"><svg class="ic"><use href="#i-shop"/></svg><span class="go">›</span><b>Shop</b><small>Script & asset TRO LABS</small></a>
       <a class="tile glass" href="#robux"><svg class="ic"><use href="#i-rbx"/></svg><span class="go">›</span><b>TROlley Robux</b><small>Rp157rb / 1.000 R$</small></a>
       <a class="tile glass" href="#donasi"><svg class="ic"><use href="#i-don"/></svg><span class="go">›</span><b>Donasi</b><small>Robux via Saweria</small></a>
+    </div>
+    <div class="contact" style="margin-top:14px">
+      <a class="ccard glass" href="https://discord.gg/ju9yUjuzqm" target="_blank" rel="noopener">
+        <span class="cic"><svg><use href="#i-fams"/></svg></span>
+        <span class="ctx"><b>Fams &amp; kolaborasi</b><small>Gabung TRO, undang TRO ke event, kerja sama antar fams, partnership</small></span>
+        <span class="cgo"><svg><use href="#dc"/></svg>Discord TRO FAMS</span>
+      </a>
+      <a class="ccard glass" href="https://discord.gg/rMkcztxv3s" target="_blank" rel="noopener">
+        <span class="cic"><svg><use href="#i-code"/></svg></span>
+        <span class="ctx"><b>Script &amp; developer</b><small>Beli script, order sistem custom, bug &amp; support script, info developer</small></span>
+        <span class="cgo"><svg><use href="#dc"/></svg>Discord TRO LABS</span>
+      </a>
+      <a class="ccard glass" href="/otrdc" target="_blank" rel="noopener">
+        <span class="cic"><svg><use href="#i-map"/></svg></span>
+        <span class="ctx"><b>Map On The Rugs</b><small>Info update &amp; event OTR, lapor bug, saran buat map OTR</small></span>
+        <span class="cgo"><svg><use href="#dc"/></svg>Discord OTR</span>
+      </a>
     </div>
   </section>
 
@@ -484,6 +511,23 @@ details p{color:var(--sub);padding-bottom:18px;max-width:70ch}
   <section class="page" id="p-faq" data-bg="chill" data-name="FAQ">
     <span class="kick">Bantuan</span>
     <h1 class="h title">FAQ</h1>
+    <div class="contact" style="margin:24px 0 0">
+      <a class="ccard glass" href="https://discord.gg/ju9yUjuzqm" target="_blank" rel="noopener">
+        <span class="cic"><svg><use href="#i-fams"/></svg></span>
+        <span class="ctx"><b>Fams &amp; kolaborasi</b><small>Gabung TRO, undang TRO ke event, kerja sama antar fams, partnership</small></span>
+        <span class="cgo"><svg><use href="#dc"/></svg>Discord TRO FAMS</span>
+      </a>
+      <a class="ccard glass" href="https://discord.gg/rMkcztxv3s" target="_blank" rel="noopener">
+        <span class="cic"><svg><use href="#i-code"/></svg></span>
+        <span class="ctx"><b>Script &amp; developer</b><small>Beli script, order sistem custom, bug &amp; support script, info developer</small></span>
+        <span class="cgo"><svg><use href="#dc"/></svg>Discord TRO LABS</span>
+      </a>
+      <a class="ccard glass" href="/otrdc" target="_blank" rel="noopener">
+        <span class="cic"><svg><use href="#i-map"/></svg></span>
+        <span class="ctx"><b>Map On The Rugs</b><small>Info update &amp; event OTR, lapor bug, saran buat map OTR</small></span>
+        <span class="cgo"><svg><use href="#dc"/></svg>Discord OTR</span>
+      </a>
+    </div>
     <div class="faq glass">
       <details><summary>Gimana cara gabung TRO?</summary><p>Masuk Discord TRO lalu jawab pertanyaan onboarding, kamu langsung jadi tamu. Mau jadi TRO MEMBER? Ajukan di channel verifikasi dan tunggu ACC admin.</p></details>
       <details><summary>Bedanya TRO dan TRO LABS?</summary><p>TRO itu komunitasnya. TRO LABS itu studionya, yang bikin map dan script, dan punya Discord sendiri khusus jual beli script.</p></details>
@@ -509,12 +553,12 @@ $('#ranks').innerHTML=RANKS.map(([n,d,c],i)=>`<div class="rank glass"><svg class
 
 /* maps */
 const MAPS=[
- {k:'otr',bg:'otr',name:'On The Rugs',sub:'Club dansa R&B & hip-hop',desc:'Ratusan dance, sync bareng teman, dance battle 1v1, dan DJ deck. Tempat nongkrong utama warga TRO.',tags:['Dance sync','Dance battle','DJ deck','Donasi Robux'],stats:[['46K+','Kunjungan'],['R15','Avatar'],['Aktif','Status']],url:'https://www.roblox.com/games/97421109127420'},
+ {k:'otr',bg:'otr',name:'On The Rugs',dc:'/otrdc',sub:'Club dansa R&B & hip-hop',desc:'Ratusan dance, sync bareng teman, dance battle 1v1, dan DJ deck. Tempat nongkrong utama warga TRO.',tags:['Dance sync','Dance battle','DJ deck','Donasi Robux'],stats:[['46K+','Kunjungan'],['R15','Avatar'],['Aktif','Status']],url:'https://www.roblox.com/games/97421109127420'},
  {k:'tunnel',bg:'tunnel',name:'Tunnel',sub:'Klub di dalam terowongan',desc:'Klub dansa di dalam terowongan beton. Joget bareng, dengerin DJ, dan nikmatin light show kayak konser.',tags:['Light show','DJ','Hangout'],stats:[['Baru','Rilis'],['R15','Avatar'],['Aktif','Status']],url:'https://www.roblox.com/games/124479883430266'}
 ];
 let curMap='otr';
 const drawMap=()=>{const m=MAPS.find(x=>x.k===curMap);
- $('#mapinfo').innerHTML=`<span class="kick">${m.sub}</span><h1 class="h">${m.name}</h1><p>${m.desc}</p><div class="chips">${m.tags.map(t=>`<span>${t}</span>`).join('')}</div><div class="mstat">${m.stats.map(([b,s])=>`<div><b>${b}</b><small>${s}</small></div>`).join('')}</div><a class="btn play" href="${m.url}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg>Play</a>`;
+ $('#mapinfo').innerHTML=`<span class="kick">${m.sub}</span><h1 class="h">${m.name}</h1><p>${m.desc}</p><div class="chips">${m.tags.map(t=>`<span>${t}</span>`).join('')}</div><div class="mstat">${m.stats.map(([b,s])=>`<div><b>${b}</b><small>${s}</small></div>`).join('')}</div><a class="btn play" href="${m.url}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg>Play</a>${m.dc?` <a class="btn dc" href="${m.dc}" target="_blank" rel="noopener"><svg><use href="#dc"/></svg>Discord ${m.name}</a>`:''}`;
  $('#picker').innerHTML=MAPS.map(x=>`<button class="pick glass${x.k===curMap?' on':''}" data-m="${x.k}"><div class="art art-${x.k}"><span>${x.name.replace(' ','<br>')}</span></div><div><b>${x.name}</b><small>${x.sub}</small></div></button>`).join('');
  const big=$('#mapbig');big.className='mapbig art art-'+m.k;big.innerHTML=`<span>${m.name.replace(' ','<br>')}</span>`;
  $('#p-map').dataset.bg=m.bg;setBg(m.bg);
