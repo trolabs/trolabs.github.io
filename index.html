@@ -483,16 +483,15 @@ details p{color:var(--sub);padding-bottom:18px;max-width:70ch}
         <button class="btn play" id="dGo" style="width:100%">Lanjut ke Bagi-Bagi</button>
         <div id="dStep" hidden style="margin-top:16px;padding:16px;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid #d8b25c66">
           <p style="color:var(--txt);font-weight:600;margin-bottom:6px">Bagi-Bagi udah kebuka di tab baru ✅</p>
-          <p style="font-size:.85rem;color:var(--sub);margin-bottom:10px">Jumlah &amp; pesan udah otomatis keisi. Tinggal isi kolom <b style="color:var(--txt)">Nama</b> pakai username Roblox kamu (udah disalin):</p>
-          <div class="dline"><span>Nama</span><b id="dVUser"></b><button type="button" data-k="user">Salin</button></div>
+          <p style="font-size:.85rem;color:var(--sub);margin-bottom:10px">Nama, jumlah &amp; pesan udah otomatis keisi. Tinggal pilih cara bayar.</p>
+          <div class="dline"><span>Nama</span><b id="dVUser"></b><span></span></div>
           <div class="dline"><span>Nominal</span><b id="dVAmt"></b><span></span></div>
           <div class="dline"><span>Pesan</span><b id="dVMsg"></b><span></span></div>
           <a class="btn play" id="dOpen" href="https://bagibagi.co/TRO_LABS" target="_blank" rel="noopener" style="width:100%;margin-top:14px">Buka Bagi-Bagi lagi</a>
         </div>
         <ol class="ol" style="margin-top:18px">
           <li><span><b>Pilih Robux & isi username</b>Klik Lanjut ke Bagi-Bagi.</span></li>
-          <li><span><b>Isi Nama di Bagi-Bagi</b>Pakai username Roblox kamu. Jumlah &amp; pesan udah keisi, jangan diubah.</span></li>
-          <li><span><b>Bayar</b>QRIS, GoPay, OVO, DANA, ShopeePay, atau transfer bank.</span></li>
+          <li><span><b>Bayar</b>Nama, jumlah &amp; pesan udah keisi. Tinggal bayar pakai QRIS, GoPay, OVO, DANA, ShopeePay, atau transfer bank.</span></li>
           <li><span><b>Cek di map</b>Efek donasi muncul di map tempat kamu lagi online. Lagi offline? Masuknya ke On The Rugs.</span></li>
         </ol>
       </div>
@@ -607,9 +606,9 @@ $('#dGo').onclick=async()=>{const r=dcalc(),u=$('#dUser').value.trim();
  if(!/^[A-Za-z0-9_]{3,20}$/.test(u)){toast('Isi username Roblox yang bener dulu');$('#dUser').focus();return;}
  try{localStorage.setItem('troUser',u);}catch{}
  const msg=($('#dMsg').value.trim()||'support TRO').slice(0,80);$('#dVMsg').textContent=msg;
- const url='https://bagibagi.co/TRO_LABS?amount='+(r*DRATE)+'&message='+encodeURIComponent(msg);$('#dOpen').href=url;window.open(url,'_blank','noopener');
+ const url='https://bagibagi.co/TRO_LABS?amount='+(r*DRATE)+'&message='+encodeURIComponent(msg)+'&name='+encodeURIComponent(u);$('#dOpen').href=url;window.open(url,'_blank','noopener');
  $('#dVAmt').textContent=rp(r*DRATE);$('#dVUser').textContent=u;$('#dStep').hidden=false;$('#dStep').scrollIntoView({behavior:'smooth',block:'nearest'});
- try{await navigator.clipboard.writeText(u);toast(`Username ${u} disalin, tempel di kolom Nama`);}catch{}};
+ try{await navigator.clipboard.writeText(u);}catch{}};
 $$('#dStep .dline button[data-k]').forEach(b=>b.onclick=async()=>{const v=$('#dVUser').textContent;try{await navigator.clipboard.writeText(v);toast(`${v} disalin`);b.textContent='Tersalin';setTimeout(()=>b.textContent='Salin',1500);}catch{toast(v);}});
 
 $$('[data-copy]').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);t.textContent='Link disalin';}catch{t.textContent=b.dataset.copy;}t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);});
