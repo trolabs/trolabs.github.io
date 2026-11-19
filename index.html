@@ -482,16 +482,16 @@ details p{color:var(--sub);padding-bottom:18px;max-width:70ch}
         <label class="inp" style="margin:0 0 16px"><input id="dMsg" type="text" maxlength="80" placeholder="Pesan (opsional)" autocomplete="off" style="font-family:Saira;font-size:1.05rem;font-weight:600" aria-label="Pesan donasi"></label>
         <button class="btn play" id="dGo" style="width:100%">Lanjut ke Bagi-Bagi</button>
         <div id="dStep" hidden style="margin-top:16px;padding:16px;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid #d8b25c66">
-          <p style="color:var(--txt);font-weight:600;margin-bottom:6px">Form Bagi-Bagi udah kebuka di pojok kanan ✅</p>
-          <p style="font-size:.85rem;color:var(--sub);margin-bottom:10px">Salin isian ini ke form-nya. Username Roblox kamu udah disalin:</p>
+          <p style="color:var(--txt);font-weight:600;margin-bottom:6px">Bagi-Bagi udah kebuka di tab baru ✅</p>
+          <p style="font-size:.85rem;color:var(--sub);margin-bottom:10px">Jumlah &amp; pesan udah otomatis keisi. Tinggal isi kolom <b style="color:var(--txt)">Nama</b> pakai username Roblox kamu (udah disalin):</p>
           <div class="dline"><span>Nama</span><b id="dVUser"></b><button type="button" data-k="user">Salin</button></div>
           <div class="dline"><span>Nominal</span><b id="dVAmt"></b><span></span></div>
           <div class="dline"><span>Pesan</span><b id="dVMsg"></b><span></span></div>
-          <a class="btn play" id="dOpen" href="https://bagibagi.co/TRO_LABS" target="_blank" rel="noopener" style="width:100%;margin-top:14px">Buka di tab baru (jumlah &amp; pesan otomatis keisi)</a>
+          <a class="btn play" id="dOpen" href="https://bagibagi.co/TRO_LABS" target="_blank" rel="noopener" style="width:100%;margin-top:14px">Buka Bagi-Bagi lagi</a>
         </div>
         <ol class="ol" style="margin-top:18px">
           <li><span><b>Pilih Robux & isi username</b>Klik Lanjut ke Bagi-Bagi.</span></li>
-          <li><span><b>Isi form Bagi-Bagi</b>Salin Nama (username Roblox), Jumlah, dan Pesan dari panduan.</span></li>
+          <li><span><b>Isi Nama di Bagi-Bagi</b>Pakai username Roblox kamu. Jumlah &amp; pesan udah keisi, jangan diubah.</span></li>
           <li><span><b>Bayar</b>QRIS, GoPay, OVO, DANA, ShopeePay, atau transfer bank.</span></li>
           <li><span><b>Cek di map</b>Efek donasi muncul di map tempat kamu lagi online. Lagi offline? Masuknya ke On The Rugs.</span></li>
         </ol>
@@ -607,9 +607,8 @@ $('#dGo').onclick=async()=>{const r=dcalc(),u=$('#dUser').value.trim();
  if(!/^[A-Za-z0-9_]{3,20}$/.test(u)){toast('Isi username Roblox yang bener dulu');$('#dUser').focus();return;}
  try{localStorage.setItem('troUser',u);}catch{}
  const msg=($('#dMsg').value.trim()||'support TRO').slice(0,80);$('#dVMsg').textContent=msg;
- const url='https://bagibagi.co/TRO_LABS?amount='+(r*DRATE)+'&message='+encodeURIComponent(msg);$('#dOpen').href=url;
- if(window.troBB&&document.querySelector('.bgbg-button'))troBB.bayar({r:r,u:u,msg:$('#dMsg').value.trim()});else window.open(url,'_blank','noopener');
- $('#dVAmt').textContent=rp(r*DRATE);$('#dVUser').textContent=u;if(!window.troBB){$('#dStep').hidden=false;$('#dStep').scrollIntoView({behavior:'smooth',block:'nearest'});}
+ const url='https://bagibagi.co/TRO_LABS?amount='+(r*DRATE)+'&message='+encodeURIComponent(msg);$('#dOpen').href=url;window.open(url,'_blank','noopener');
+ $('#dVAmt').textContent=rp(r*DRATE);$('#dVUser').textContent=u;$('#dStep').hidden=false;$('#dStep').scrollIntoView({behavior:'smooth',block:'nearest'});
  try{await navigator.clipboard.writeText(u);toast(`Username ${u} disalin, tempel di kolom Nama`);}catch{}};
 $$('#dStep .dline button[data-k]').forEach(b=>b.onclick=async()=>{const v=$('#dVUser').textContent;try{await navigator.clipboard.writeText(v);toast(`${v} disalin`);b.textContent='Tersalin';setTimeout(()=>b.textContent='Salin',1500);}catch{toast(v);}});
 
@@ -685,7 +684,7 @@ var panel=function(){return document.querySelector('.bgbg-panel');};
 var buka=function(){var p=panel();return !!p&&p.style.opacity==='1';};
 function tulis(){
  if(isi)hint.innerHTML='Isi Nama: <b>'+esc(isi.u)+'</b> (udah disalin) · Jumlah: <b>'+isi.jml+'</b>';
- else hint.innerHTML='Isi <b>Nama</b> pakai username Roblox kamu biar donasinya masuk sebagai Robux.';}
+ else hint.innerHTML='Isi <b>Nama</b> pakai username Roblox kamu &amp; <b>Jumlah</b> minimal Rp1.000 (Rp110 = R$1) biar masuk ke map.';}
 function atur(){var p=panel();if(!p||!buka()){hint.classList.remove('on');isi=null;return;}
  tulis();hint.classList.add('on');var h=hint.offsetHeight;
  if(innerWidth<420){hint.style.cssText='left:12px;right:12px;width:auto;top:10px';p.style.top=(h+20)+'px';}
