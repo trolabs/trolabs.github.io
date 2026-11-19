@@ -469,11 +469,8 @@ details p{color:var(--sub);padding-bottom:18px;max-width:70ch}
       <div class="card glass cash">
         <svg class="ic"><use href="#i-rbx"/></svg>
         <h3>Donasi Robux</h3>
-        <p>Pilih map dan jumlah Robux, bayar pakai Bagi-Bagi. Donasi kamu masuk ke map sebagai donasi Robux, lengkap dengan efek dan papan Top Donatur.</p>
-        <div class="mpick" id="dMap" style="margin-top:18px">
-          <button type="button" data-m="OTR" class="on"><b>On The Rugs</b><small>#OTR</small></button>
-          <button type="button" data-m="TUNNEL"><b>Tunnel</b><small>#TUNNEL</small></button>
-        </div>
+        <p>Pilih jumlah Robux, bayar pakai Bagi-Bagi. Donasi kamu muncul di map tempat kamu lagi online sebagai donasi Robux, lengkap dengan efek dan papan Top Donatur.</p>
+<div style="margin-top:18px"></div>
         <div class="pk" id="dpk"></div>
         <label class="inp"><svg><use href="#rbx"/></svg><input id="dIn" type="number" inputmode="numeric" min="10" step="10" value="1000" aria-label="Jumlah Robux donasi"><span>Robux</span></label>
         <div class="total"><small>Bayar di Bagi-Bagi</small><b id="dTot">Rp110.000</b></div>
@@ -486,14 +483,13 @@ details p{color:var(--sub);padding-bottom:18px;max-width:70ch}
           <div class="dline"><span>Nama</span><b id="dVUser"></b><button type="button" data-k="user">Salin</button></div>
           <div class="dline"><span>Nominal</span><b id="dVAmt"></b><span></span></div>
           <div class="dline"><span>Pesan</span><b id="dVMsg"></b><span></span></div>
-          <p style="font-size:.8rem;color:var(--sub);margin-top:8px">Jangan hapus kode <b style="color:var(--gold2)" id="dVTag">#OTR</b> di pesan, itu tanda donasi kamu buat map mana.</p>
           <a class="btn play" id="dOpen" href="https://bagibagi.co/TRO_LABS" target="_blank" rel="noopener" style="width:100%;margin-top:14px">Buka di tab baru (jumlah &amp; pesan otomatis keisi)</a>
         </div>
         <ol class="ol" style="margin-top:18px">
-          <li><span><b>Pilih map, Robux & username</b>Klik Lanjut ke Bagi-Bagi.</span></li>
+          <li><span><b>Pilih Robux & isi username</b>Klik Lanjut ke Bagi-Bagi.</span></li>
           <li><span><b>Isi form Bagi-Bagi</b>Salin Nama (username Roblox), Jumlah, dan Pesan dari panduan.</span></li>
           <li><span><b>Bayar</b>QRIS, GoPay, OVO, DANA, ShopeePay, atau transfer bank.</span></li>
-          <li><span><b>Cek di map</b>Masuk map yang kamu pilih, efek donasi kamu muncul.</span></li>
+          <li><span><b>Cek di map</b>Efek donasi muncul di map tempat kamu lagi online. Lagi offline? Masuknya ke On The Rugs.</span></li>
         </ol>
       </div>
       <div class="card glass">
@@ -596,8 +592,7 @@ $('#rbxIn').addEventListener('input',calc);calc();
 const t=$('#toast');
 function toast(m){t.textContent=m;t.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('show'),2600);}
 /* donasi robux */
-const DRATE=110,DMIN=10;let dMap='OTR';
-$$('#dMap button').forEach(b=>b.onclick=()=>{dMap=b.dataset.m;$$('#dMap button').forEach(x=>x.classList.toggle('on',x===b));$('#dStep').hidden=true;});
+const DRATE=110,DMIN=10;
 $('#dpk').innerHTML=[100,250,500,1000,2000,5000].map(r=>`<button type="button" data-r="${r}">${r.toLocaleString('id-ID')} R$<small>${rp(r*DRATE)}</small></button>`).join('');
 const dcalc=()=>{const r=Math.max(0,Math.floor(+$('#dIn').value||0));$('#dTot').textContent=rp(r*DRATE);$$('#dpk button').forEach(b=>b.classList.toggle('on',+b.dataset.r===r));return r;};
 $$('#dpk button').forEach(b=>b.onclick=()=>{$('#dIn').value=b.dataset.r;dcalc();});
@@ -607,10 +602,10 @@ $('#dGo').onclick=async()=>{const r=dcalc(),u=$('#dUser').value.trim();
  if(r<DMIN){toast(`Minimal R$${DMIN}`);return;}
  if(!/^[A-Za-z0-9_]{3,20}$/.test(u)){toast('Isi username Roblox yang bener dulu');$('#dUser').focus();return;}
  try{localStorage.setItem('troUser',u);}catch{}
- const tag='#'+dMap,msg=($('#dMsg').value.trim()||'support TRO').slice(0,80);$('#dVTag').textContent=tag;$('#dVMsg').textContent=tag+' '+msg;
- const url='https://bagibagi.co/TRO_LABS?amount='+(r*DRATE)+'&message='+encodeURIComponent(tag+' '+msg);$('#dOpen').href=url;
- if(window.troBB&&document.querySelector('.bgbg-button'))troBB.bayar({map:dMap,r:r,u:u,msg:$('#dMsg').value.trim()});else window.open(url,'_blank','noopener');
- $('#dVAmt').textContent=rp(r*DRATE);$('#dVUser').textContent=u;$('#dStep').hidden=false;$('#dStep').scrollIntoView({behavior:'smooth',block:'nearest'});
+ const msg=($('#dMsg').value.trim()||'support TRO').slice(0,80);$('#dVMsg').textContent=msg;
+ const url='https://bagibagi.co/TRO_LABS?amount='+(r*DRATE)+'&message='+encodeURIComponent(msg);$('#dOpen').href=url;
+ if(window.troBB&&document.querySelector('.bgbg-button'))troBB.bayar({r:r,u:u,msg:$('#dMsg').value.trim()});else window.open(url,'_blank','noopener');
+ $('#dVAmt').textContent=rp(r*DRATE);$('#dVUser').textContent=u;if(!window.troBB){$('#dStep').hidden=false;$('#dStep').scrollIntoView({behavior:'smooth',block:'nearest'});}
  try{await navigator.clipboard.writeText(u);toast(`Username ${u} disalin, tempel di kolom Nama`);}catch{}};
 $$('#dStep .dline button[data-k]').forEach(b=>b.onclick=async()=>{const v=$('#dVUser').textContent;try{await navigator.clipboard.writeText(v);toast(`${v} disalin`);b.textContent='Tersalin';setTimeout(()=>b.textContent='Salin',1500);}catch{toast(v);}});
 
@@ -665,94 +660,37 @@ function go(){let p=location.hash.slice(1);if(!PAGES.includes(p))p='home';
 addEventListener('hashchange',go);go();
 </script>
 <style>
-/* Donasi cepat TRO + widget Bagi-Bagi — BY TRO TEAM AZAZEL */
-.qd{position:fixed;z-index:2147483001;width:300px;background:rgba(10,13,26,.97);border:1px solid #d8b25c55;border-radius:16px;padding:16px 16px 14px;color:var(--txt);box-shadow:0 18px 50px rgba(0,0,0,.55);font-family:Saira,system-ui,sans-serif;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s,transform .2s;max-height:calc(100dvh - 24px);overflow:auto}
-.qd.on{opacity:1;transform:none;pointer-events:auto}
-.qd h4{font-family:"Saira Condensed";font-size:1.4rem;margin:0 0 2px;color:var(--gold2);padding-right:24px}
-.qd p{font-size:.8rem;color:var(--sub);margin:0 0 12px;line-height:1.45}
-.qd .x{position:absolute;top:8px;right:10px;width:28px;height:28px;font-size:20px;color:var(--sub);background:none;border:0;cursor:pointer}
-.qd .mp{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
-.qd .am{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
-.qd .mp button,.qd .am button{padding:8px 4px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid var(--edge);font:700 .85rem Saira,sans-serif;color:var(--txt);cursor:pointer}
-.qd .am small{display:block;font-weight:500;font-size:.68rem;color:var(--sub)}
-.qd .mp button.on,.qd .am button.on{border-color:var(--gold);background:rgba(216,178,92,.16);color:var(--gold2)}
-.qd input{display:block;width:100%;box-sizing:border-box;padding:9px 11px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid var(--edge);color:var(--txt);font:600 .95rem Saira,sans-serif;margin-bottom:8px;outline:0}
-.qd input:focus{border-color:var(--gold)}
-.qd .go{display:block;width:100%;padding:11px;border-radius:10px;border:0;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1405;font:800 .95rem Saira,sans-serif;margin-top:4px;cursor:pointer;text-align:center}
-.qd .go.ghost{background:rgba(255,255,255,.06);color:var(--txt);border:1px solid var(--edge)}
-.qd .row{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--edge)}
-.qd .row span{font-size:.75rem;color:var(--sub)}
-.qd .row b{font-family:"Saira Condensed";font-size:1.15rem;color:var(--gold2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.qd .row button{padding:5px 10px;border-radius:7px;border:0;background:var(--gold);color:#1a1405;font:700 .75rem Saira,sans-serif;cursor:pointer}
-.qd .lnk{display:block;text-align:center;font-size:.78rem;color:var(--sub);margin-top:10px;text-decoration:underline}
-.qd .err{color:#ff8b7b;font-size:.78rem;min-height:1em;margin:-2px 0 6px}
+/* Widget Bagi-Bagi + catatan kecil TRO — BY TRO TEAM AZAZEL */
+.qh{position:fixed;z-index:2147483001;width:380px;max-width:calc(100vw - 24px);box-sizing:border-box;background:rgba(10,13,26,.95);border:1px solid #d8b25c40;border-radius:12px;padding:9px 12px;font:500 .8rem/1.45 Saira,system-ui,sans-serif;color:var(--sub);opacity:0;pointer-events:none;transition:opacity .2s}
+.qh.on{opacity:1;pointer-events:auto}
+.qh b{color:var(--gold2);font-weight:700}
+.qh button{margin-left:6px;padding:2px 8px;border-radius:6px;border:0;background:var(--gold);color:#1a1405;font:700 .72rem Saira,sans-serif;cursor:pointer}
 </style>
 <script>
-// Donasi TRO nyambung ke widget Bagi-Bagi — BY TRO TEAM AZAZEL
-// Tombol melayang & tombol "Lanjut" di halaman Donasi -> panduan TRO (map, username, Robux) -> panel Bagi-Bagi kebuka di sebelahnya.
+// Widget Bagi-Bagi TRO — BY TRO TEAM AZAZEL. Tombol emas = form Bagi-Bagi langsung, plus 1 catatan kecil (username).
 (function(){
-var OFF=innerWidth<=760?88:24,RATE=110,MIN=10,lewat=false,mode='';
-var st={map:'OTR',r:1000,u:'',msg:''};
-try{st.u=localStorage.getItem('troUser')||'';}catch(e){}
-var rp=function(n){return 'Rp'+Number(n).toLocaleString('id-ID');};
+var OFF=innerWidth<=760?88:24,lewat=false,isi=null;
 var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
 var s=document.createElement('script');s.src='https://bagibagi.co/widget.js';
 var d={username:'TRO_LABS',mode:'floating',position:'right',color:'#d8b25c',theme:'dark',tooltip:'Donasi ke map TRO',offset:OFF};
 for(var k in d)s.setAttribute('data-'+k,d[k]);
-var box=document.createElement('div');box.className='qd';box.setAttribute('role','dialog');box.setAttribute('aria-label','Donasi TRO');
-document.body.appendChild(box);document.body.appendChild(s);
-box.addEventListener('click',function(e){e.stopPropagation();});
+var hint=document.createElement('div');hint.className='qh';document.body.appendChild(hint);document.body.appendChild(s);
+hint.addEventListener('click',function(e){e.stopPropagation();});
 var tombol=function(){return document.querySelector('.bgbg-button');};
 var panel=function(){return document.querySelector('.bgbg-panel');};
-var panelBuka=function(){var p=panel();return !!p&&p.style.opacity==='1';};
-function bukaPanel(on){if(panelBuka()!==on&&tombol()){lewat=true;tombol().click();lewat=false;}setTimeout(atur,0);}
-function atur(){var w=innerWidth,p=panel(),buka=box.classList.contains('on');
- if(w<760){box.style.cssText='left:12px;right:12px;width:auto;top:12px';
-  if(p&&panelBuka()&&buka){var h=box.offsetHeight+24;p.style.top=h+'px';p.style.left='0';p.style.right='0';p.style.bottom='0';p.style.width='auto';p.style.height='auto';p.style.maxHeight='none';p.style.borderRadius='16px 16px 0 0';}}
- else box.style.cssText='right:'+(panelBuka()?OFF+380+16:OFF)+'px;bottom:'+(OFF+68)+'px';}
-function tutup(){box.classList.remove('on');mode='';bukaPanel(false);}
-function salin(v,b){(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(function(){if(b){b.textContent='Tersalin';setTimeout(function(){b.textContent='Salin';},1500);}},function(){prompt('Salin manual:',v);});}
-function form(){mode='form';
- box.innerHTML='<button class="x" aria-label="Tutup">×</button><h4>Donasi ke map TRO</h4><p>Bayar pakai rupiah, masuk ke map sebagai donasi Robux lengkap sama efeknya.</p>'+
- '<div class="mp">'+['OTR','TUNNEL'].map(function(m){return '<button type="button" data-m="'+m+'"'+(st.map===m?' class="on"':'')+'>'+(m==='OTR'?'On The Rugs':'Tunnel')+'</button>';}).join('')+'</div>'+
- '<div class="am">'+[100,500,1000].map(function(r){return '<button type="button" data-r="'+r+'"'+(st.r===r?' class="on"':'')+'>'+r.toLocaleString('id-ID')+' R$<small>'+rp(r*RATE)+'</small></button>';}).join('')+'</div>'+
- '<input id="qdR" type="number" inputmode="numeric" min="10" step="10" value="'+st.r+'" aria-label="Jumlah Robux">'+
- '<input id="qdU" placeholder="Username Roblox kamu" value="'+esc(st.u)+'" autocomplete="off" aria-label="Username Roblox">'+
- '<input id="qdM" placeholder="Pesan (opsional)" maxlength="80" value="'+esc(st.msg)+'" autocomplete="off" aria-label="Pesan">'+
- '<div class="err" id="qdE"></div><button type="button" class="go" id="qdGo"></button>';
- var R=box.querySelector('#qdR'),G=box.querySelector('#qdGo');
- var hitung=function(){var r=Math.floor(+R.value||0);G.textContent='Lanjut bayar '+rp(Math.max(r,0)*RATE);box.querySelectorAll('.am button').forEach(function(b){b.classList.toggle('on',+b.dataset.r===r);});return r;};
- box.querySelectorAll('.mp button').forEach(function(b){b.onclick=function(){st.map=b.dataset.m;box.querySelectorAll('.mp button').forEach(function(x){x.classList.toggle('on',x===b);});};});
- box.querySelectorAll('.am button').forEach(function(b){b.onclick=function(){R.value=b.dataset.r;hitung();};});
- R.oninput=hitung;hitung();
- G.onclick=function(){var r=hitung(),u=box.querySelector('#qdU').value.trim(),E=box.querySelector('#qdE');
-  if(r<MIN){E.textContent='Minimal R$'+MIN+'.';return;}
-  if(!/^[A-Za-z0-9_]{3,20}$/.test(u)){E.textContent='Isi username Roblox kamu yang bener (bukan nickname).';box.querySelector('#qdU').focus();return;}
-  bayar({map:st.map,r:r,u:u,msg:box.querySelector('#qdM').value.trim()});};
- box.querySelector('.x').onclick=tutup;}
-function bayar(o){mode='bayar';st.map=o.map;st.r=o.r;st.u=o.u;st.msg=o.msg||'';try{localStorage.setItem('troUser',o.u);}catch(e){}
- var tag='#'+o.map,pesan=tag+' '+(st.msg||'support TRO').slice(0,80),jml=String(o.r*RATE);
- var url='https://bagibagi.co/TRO_LABS?amount='+jml+'&message='+encodeURIComponent(pesan);
- box.innerHTML='<button class="x" aria-label="Tutup">×</button><h4>Isi form Bagi-Bagi</h4><p>Salin satu-satu ke form Bagi-Bagi'+(innerWidth<760?' di bawah':' di sebelah')+', lalu bayar.</p>'+
- '<div class="row"><span>Nama</span><b>'+esc(o.u)+'</b><button type="button" data-v="'+esc(o.u)+'">Salin</button></div>'+
- '<div class="row"><span>Jumlah</span><b>'+rp(jml)+'</b><button type="button" data-v="'+jml+'">Salin</button></div>'+
- '<div class="row"><span>Pesan</span><b>'+esc(pesan)+'</b><button type="button" data-v="'+esc(pesan)+'">Salin</button></div>'+
- '<p style="margin:10px 0 0">Nama harus username Roblox biar kebaca jadi <b style="color:var(--gold2)">R$'+o.r.toLocaleString('id-ID')+'</b>. Kode <b style="color:var(--gold2)">'+tag+'</b> di pesan = map tujuan.</p>'+
- '<button type="button" class="go ghost" id="qdUbah" style="margin-top:12px">Ubah pilihan</button>'+
- '<a class="lnk" href="'+url+'" target="_blank" rel="noopener">Buka di tab baru (jumlah &amp; pesan otomatis keisi)</a>';
- box.querySelectorAll('.row button').forEach(function(b){b.onclick=function(){salin(b.dataset.v,b);};});
- box.querySelector('#qdUbah').onclick=function(){form();atur();};box.querySelector('.x').onclick=tutup;
- box.classList.add('on');salin(o.u);setTimeout(function(){bukaPanel(true);},0);}
-// klik tombol melayang Bagi-Bagi -> panduan TRO dulu
-document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.bgbg-button');if(!b||lewat)return;
- e.stopImmediatePropagation();e.preventDefault();
- if(box.classList.contains('on')){tutup();return;}
- form();box.classList.add('on');atur();},true);
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&box.classList.contains('on'))tutup();});
+var buka=function(){var p=panel();return !!p&&p.style.opacity==='1';};
+function tulis(){
+ if(isi)hint.innerHTML='Isi Nama: <b>'+esc(isi.u)+'</b> (udah disalin) · Jumlah: <b>'+isi.jml+'</b>';
+ else hint.innerHTML='Isi <b>Nama</b> pakai username Roblox kamu biar donasinya masuk sebagai Robux.';}
+function atur(){var p=panel();if(!p||!buka()){hint.classList.remove('on');isi=null;return;}
+ tulis();hint.classList.add('on');var h=hint.offsetHeight;
+ if(innerWidth<420){hint.style.cssText='left:12px;right:12px;width:auto;top:10px';p.style.top=(h+20)+'px';}
+ else{var r=p.getBoundingClientRect();hint.style.cssText='right:'+OFF+'px;top:'+Math.max(8,r.top-h-8)+'px';}}
+s.onload=function(){var p=panel();if(p)new MutationObserver(function(){setTimeout(atur,0);}).observe(p,{attributes:true,attributeFilter:['style']});};
 addEventListener('resize',function(){setTimeout(atur,0);});
-// panel Bagi-Bagi ditutup (× / klik luar) -> panduan ikut tutup
-s.onload=function(){var p=panel();if(p)new MutationObserver(function(){if(!panelBuka()&&mode==='bayar'&&!lewat){box.classList.remove('on');mode='';}}).observe(p,{attributes:true,attributeFilter:['style']});};
-window.troBB={bayar:bayar,buka:function(){form();box.classList.add('on');atur();}};
+window.troBB={bayar:function(o){isi={u:o.u,jml:'Rp'+(o.r*110).toLocaleString('id-ID'),pesan:(o.msg||'support TRO').slice(0,80)};
+ navigator.clipboard&&navigator.clipboard.writeText(o.u).catch(function(){});
+ setTimeout(function(){if(!buka()&&tombol()){lewat=true;tombol().click();lewat=false;}var keep=isi;setTimeout(function(){isi=keep;atur();},50);},0);}};
 })();
 </script>
 </body>
