@@ -663,5 +663,11 @@ function go(){let p=location.hash.slice(1);if(!PAGES.includes(p))p='home';
  $('.menu a.on')?.scrollIntoView({block:'nearest',inline:'center'});}
 addEventListener('hashchange',go);go();
 </script>
+<script>
+// Widget Bagi-Bagi (tombol donasi melayang) — HP: naik di atas menu bawah
+(function(){var s=document.createElement('script');s.src='https://bagibagi.co/widget.js';
+var d={username:'TRO_LABS',mode:'floating',position:'right',color:'#d8b25c',theme:'dark',tooltip:'Donasi ke TRO lewat Bagi-Bagi',offset:innerWidth<=760?88:24};
+for(var k in d)s.setAttribute('data-'+k,d[k]);document.body.appendChild(s);})();
+</script>
 </body>
 </html>
