@@ -497,13 +497,18 @@ details p{color:var(--sub);padding-bottom:18px;max-width:70ch}
       </div>
       <div class="card glass">
         <svg class="ic"><use href="#i-don"/></svg>
-        <h3>Donasi bebas</h3>
-        <p>Mau dukung TRO tanpa hitungan Robux? Kirim berapa aja lewat Bagi-Bagi.</p>
-        <div class="amts"><span>Rp5.000</span><span>Rp10.000</span><span>Rp25.000</span><span>Rp50.000</span></div>
-        <a class="btn ghost" href="https://bagibagi.co/TRO_LABS" target="_blank" rel="noopener">Buka Bagi-Bagi</a>
+        <h3>Donasi Cash</h3>
+        <p>Kirim berapa aja tanpa hitungan Robux. Di map muncul sebagai <b style="color:var(--gold2)">GOLD</b> dan masuk papan TOP GOLD.</p>
+        <div class="pk" id="cpk" style="margin-top:18px"></div>
+        <label class="inp"><span style="margin-left:0">Rp</span><input id="cIn" type="number" inputmode="numeric" min="1000" step="1000" value="10000" aria-label="Jumlah donasi cash (rupiah)"><span>GOLD</span></label>
+        <div class="total"><small>Bayar di Bagi-Bagi</small><b id="cTot">Rp10.000</b></div>
+        <label class="inp" style="margin:6px 0 16px"><input id="cUser" type="text" placeholder="Username Roblox kamu" autocomplete="off" style="font-family:Saira;font-size:1.05rem;font-weight:600" aria-label="Username Roblox"></label>
+        <label class="inp" style="margin:0 0 16px"><input id="cMsg" type="text" maxlength="80" placeholder="Pesan (opsional)" autocomplete="off" style="font-family:Saira;font-size:1.05rem;font-weight:600" aria-label="Pesan donasi"></label>
+        <button class="btn play" id="cGo" style="width:100%">Lanjut ke Bagi-Bagi</button>
+        <p id="cOk" hidden style="margin-top:12px;font-size:.85rem;color:var(--sub)">Bagi-Bagi udah kebuka di tab baru ✅ Nama, jumlah &amp; pesan udah keisi, tinggal bayar.</p>
+        <h3 style="font-size:1.4rem;margin-top:28px">Bedanya</h3>
+        <p><b style="color:var(--txt)">Donasi Robux</b>: bayar rupiah, di map muncul sebagai Robux (R$1.000 = Rp110.000, minimal R$10).<br><b style="color:var(--txt)">Donasi Cash</b>: nominal bebas mulai Rp1.000, di map muncul sebagai GOLD.</p>
         <div class="copy">trolabs.github.io/#donasi <button type="button" data-copy="https://trolabs.github.io/#donasi">Salin link</button></div>
-        <h3 style="font-size:1.4rem;margin-top:28px">Rate</h3>
-        <p>R$1.000 = Rp110.000 · R$100 = Rp11.000 · minimal R$10.</p>
       </div>
     </div>
   </section>
@@ -605,10 +610,24 @@ $('#dGo').onclick=async()=>{const r=dcalc(),u=$('#dUser').value.trim();
  if(r<DMIN){toast(`Minimal R$${DMIN}`);return;}
  if(!/^[A-Za-z0-9_]{3,20}$/.test(u)){toast('Isi username Roblox yang bener dulu');$('#dUser').focus();return;}
  try{localStorage.setItem('troUser',u);}catch{}
- const msg=($('#dMsg').value.trim()||'support TRO').slice(0,80);$('#dVMsg').textContent=msg;
+ const msg=('R$'+r.toLocaleString('id-ID')+' · '+($('#dMsg').value.trim()||'support TRO')).slice(0,100);$('#dVMsg').textContent=msg;
  const url='https://bagibagi.co/TRO_LABS?amount='+(r*DRATE)+'&message='+encodeURIComponent(msg)+'&name='+encodeURIComponent(u);$('#dOpen').href=url;window.open(url,'_blank','noopener');
  $('#dVAmt').textContent=rp(r*DRATE);$('#dVUser').textContent=u;$('#dStep').hidden=false;$('#dStep').scrollIntoView({behavior:'smooth',block:'nearest'});
  try{await navigator.clipboard.writeText(u);}catch{}};
+/* donasi cash (GOLD) */
+const CMIN=1000;
+$('#cpk').innerHTML=[5000,10000,25000,50000,100000,250000].map(v=>`<button type="button" data-v="${v}">${(v/1000).toLocaleString('id-ID')}rb<small>GOLD</small></button>`).join('');
+const ccalc=()=>{const v=Math.max(0,Math.floor(+$('#cIn').value||0));$('#cTot').textContent=rp(v);$$('#cpk button').forEach(b=>b.classList.toggle('on',+b.dataset.v===v));return v;};
+$$('#cpk button').forEach(b=>b.onclick=()=>{$('#cIn').value=b.dataset.v;ccalc();});
+$('#cIn').addEventListener('input',ccalc);ccalc();
+try{$('#cUser').value=localStorage.getItem('troUser')||'';}catch{}
+$('#cGo').onclick=()=>{const v=ccalc(),u=$('#cUser').value.trim();
+ if(v<CMIN){toast('Minimal Rp1.000');return;}
+ if(!/^[A-Za-z0-9_]{3,20}$/.test(u)){toast('Isi username Roblox yang bener dulu');$('#cUser').focus();return;}
+ try{localStorage.setItem('troUser',u);}catch{}
+ const msg=($('#cMsg').value.trim()||'support TRO').slice(0,80);
+ window.open('https://bagibagi.co/TRO_LABS?amount='+v+'&message='+encodeURIComponent(msg)+'&name='+encodeURIComponent(u),'_blank','noopener');
+ $('#cOk').hidden=false;};
 $$('#dStep .dline button[data-k]').forEach(b=>b.onclick=async()=>{const v=$('#dVUser').textContent;try{await navigator.clipboard.writeText(v);toast(`${v} disalin`);b.textContent='Tersalin';setTimeout(()=>b.textContent='Salin',1500);}catch{toast(v);}});
 
 $$('[data-copy]').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);t.textContent='Link disalin';}catch{t.textContent=b.dataset.copy;}t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);});
